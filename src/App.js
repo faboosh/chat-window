@@ -1,24 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import ChatWindow from "@shared/ChatWindow"
+import firebase from 'firebase/app';
+import firebaseConfig from "@config/firebase"
 
 function App() {
+
+  try {
+    firebase.initializeApp(firebaseConfig);
+  } catch (error) {
+    console.log("Firebase APP allready initalized");
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChatWindow theme={} />
   );
 }
 
