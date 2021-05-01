@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+      "target": "es2017",
+      "allowSyntheticDefaultImports": false,
+      "baseUrl": "./",
+      "paths": {
+        "@native/*": [ "src/lib/native/*" ],
+        "@browser/*": [ "src/lib/browser/*" ],
+        "@shared/*": [ "src/lib/shared/*" ],
+        "@components/*": [ "src/components/*" ],
+        "@config/*": [ "src/config/*" ],
+        "@ws-chat/*": [ "src/lib/*" ],
+        "@audio/*": [ "src/lib/audio/*" ],
+        "@enums/*": [ "src/enums/*" ],
+        "@hooks/*": [ "src/lib/hooks/*" ],
+        "@icons/*": [ "src/components/atoms/Icons/*" ],
+        "@styles/*": [ "src/styles/*" ],
+        "@utils/*": [ "src/utils/*" ],
+        "@state/*": [ "src/state/*" ],
+        "@types/*": [ "src/types/*" ],
+        "@storybookHelpers/*": [ "../.storybook/helpers/*" ]
+      }
+    },
+    "exclude": ["node_modules", "dist"]
+}
