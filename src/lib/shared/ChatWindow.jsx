@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useMessageCollection, useFirebaseState } from '@hooks'
+import { useMessageCollection, useFirebaseState } from '../hooks'
 import { ChatContext } from './ChatProvider'
 
 import { 
