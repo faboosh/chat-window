@@ -5,7 +5,7 @@ import {
     EmojiTopbar as Topbar, 
     EmojiBody as Body,
     EmojiItem as Emoji,
-} from '@browser/styled'
+} from '../../browser/styled'
 
 import * as unicodeEmoji from 'unicode-emoji';
 

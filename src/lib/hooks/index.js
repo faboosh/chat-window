@@ -1,5 +1,6 @@
 import useFirebaseState from './useFirebaseState'
 import useMessageCollection from './useMessageCollection'
+import useFirebaseRef from './useFirebaseRef'
 
 const hooks = {
     useFirebaseState,
@@ -9,6 +10,7 @@ const hooks = {
 // export default hooks
 
 export {
+    useFirebaseRef,
     useFirebaseState,
     useMessageCollection
 }

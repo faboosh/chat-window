@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { ResizeableInputDiv as Input } from '@browser/styled'
+import { ResizeableInputDiv as Input } from '../../browser/styled'
 
 export default function ResizeableInput({
     value,

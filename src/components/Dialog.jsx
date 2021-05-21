@@ -13,6 +13,7 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
     z-index: 100;
+    backdrop-filter: blur(10px);
 `
 
 const Box = styled.div`
@@ -32,7 +33,7 @@ const Title = styled.div`
     color: #dadada;
 `
 
-const Input = styled.input`
+export const Input = styled.input`
     box-sizing: border-box;
     width: 100%;
     background: #444;
@@ -70,16 +71,17 @@ export default function Dialog({
     onConfirm = () => {}
 }) {
     const [name, setName] = useState("")
+    const [room, setRoom] = useState("public")
 
     return (
         <>
             { show && (
                 <Wrapper>
                     <Box>
-                        <Title>Vad heter du?</Title>
+                        <Title>Select nickname</Title>
                         <Body>
-                            <Input placeholder="Ditt namn" onChange={(e) => setName(e.target.value)} />   
-                            <Button onClick={() => onConfirm(name)}>Gå med</Button>    
+                            <Input placeholder="Name" onChange={(e) => setName(e.target.value)} />   
+                            <Button onClick={() => onConfirm({ name, room })}>Join</Button>    
                         </Body>
                     </Box>
                 </Wrapper>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { ChatMessageInputView as View, ResizeableInputDiv as Input, ChatMessageInputButtonGroup as ButtonGroup } from '@browser/styled'
+import { ChatMessageInputView as View, ResizeableInputDiv as Input, ChatMessageInputButtonGroup as ButtonGroup } from '../../browser/styled'
 import EmojiPicker from '../EmojiPicker'
 import ResizeableInput from './ResizeableInput'
 
 export default function ChatMessageInput({
-    send = () => { },
+    onSend = () => { },
     sendBtnContent = "➤",
     setIsTyping = () => { },
     children,
@@ -13,7 +13,7 @@ export default function ChatMessageInput({
 
     function sendMessage() {
         if(message) {
-            send(message)
+            onSend(message)
             setMessage("")
         }
     }

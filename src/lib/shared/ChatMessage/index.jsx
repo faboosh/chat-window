@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChatMessageView as View, ChatMessageContent as Content, ChatMessageAuthor as Author } from '@browser/styled'
+import { ChatMessageView as View, ChatMessageContent as Content, ChatMessageAuthor as Author } from '../../browser/styled'
 
 export default function ChatMessage({ message, author, messageByMe }) {
     return (

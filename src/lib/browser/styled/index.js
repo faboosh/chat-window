@@ -52,9 +52,23 @@ export const IsTypingList = styled.div`
     ${({ theme }) => theme['IsTypingList'] ?? "" };
 ` 
 
+export const ChatIndicatorListView = styled.div`
+    ${({ theme }) => {
+        return theme['ChatIndicatorList'] ?? "width: 200px; background: red;"
+    } };
+`
+
+export const ChatIndicatorView = styled.div`
+    ${({ theme }) => {
+        return theme['ChatIndicator'] ?? "width: 200px; background: red;"
+    } };
+`
+
 export const IsTypingItem = styled.div`
     ${({ theme }) => theme['IsTypingItem'] ?? "" };
 `
+
+
 
 export const ResizeableInputDiv = styled.div.attrs({
     contentEditable: true,

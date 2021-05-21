@@ -8,6 +8,7 @@ const isTypingAnim = keyframes `
 `
 
 export const accent = "#18b583"
+// export const accent = "purple"
 
 const scrollbar = css`
     &::-webkit-scrollbar {
@@ -130,11 +131,7 @@ export default {
             box-sizing: border-box;
             font-family: sans-serif;
             background: #242424;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;  
+            flex-grow: 1;
         `,
 
         ChatMessageInput: css`
@@ -183,6 +180,33 @@ export default {
             bottom: 70px;
             opacity: 0.7;
             z-index: 1000;
+        `,
+
+        ChatIndicatorList: css`
+            display: flex;
+            flex-direction: column;
+            width: 30vw;
+            max-width: 400px;
+            color: white;
+            box-sizing: border-box;
+            font-family: sans-serif;
+            /* background: ${accent}; */
+        `,
+
+        ChatIndicator: css`
+            display: flex;
+            flex-direction: column;
+            width: 30vw;
+            max-width: 400px;
+            cursor: pointer;
+            padding: 1rem;
+            color: ${accent};
+            background: #333;    
+            ${({ active }) => active ? `
+                background: ${accent};
+                color: #333;
+            ` : ""}
+            transition: .25s all;
         `,
 
         IsTypingItem: css`

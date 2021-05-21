@@ -1,33 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react'
-import ChatMessage from '@shared/ChatMessage/index'
-import { ChatMessageListView } from '@browser/styled'
-import {Howl, Howler} from 'howler';
+import ChatMessage from './ChatMessage/index'
+import { ChatMessageListView } from '../browser/styled'
 import IsTypingList from './IsTypingList';
-const msgSound = require('../audio/bombaclot_1.wav').default
-
-const bombaclat = new Howl({
-    src: [ msgSound ],
-    volume: 0.2
-});
 
 export default function ChatMessageList({ 
     messageList, 
     me, 
-    messageByMe, 
-    isTypingList,
-    wrapperComponent: View = ChatMessageListView, 
-    autoScroll = false,
-    children = ({ messageList, isMessageByMe, Components: { ChatMessage } }) => {
+    messageByMe,
+    wrapper: View = ChatMessageListView, 
+    autoScroll = true,
+    children = ({ messageList, Components: { ChatMessage } }) => {
         return <>
-            {
-                messageList && Object.entries(messageList)
-                    .map(([firebaseID, message]) => 
-                        <ChatMessage key={firebaseID} {...{
-                            ...message, 
-                            messageByMe: isMessageByMe(message)
-                        }} /> 
-                    )
-            }
+            { messageList && messageList.map((message) => 
+                <ChatMessage {...message} /> 
+            )}
         </>
     }
 }) {
@@ -43,8 +29,6 @@ export default function ChatMessageList({
     
                 const lastMessage = messageListArr[messageListArr.length - 1][1]
     
-                if( /bomba(c|k)l(a|o)t/gi.test(lastMessage.message) ) bombaclat.play()
-    
                 scrollRef.current.scrollIntoView()
             }
         }
@@ -54,11 +38,24 @@ export default function ChatMessageList({
         return messageByMe({ me, author: message.author })
     }
 
+    function mapMessageByMe(messageList) {
+        return messageList 
+        ? Object.entries(messageList).map(([ firebaseID, message ]) => {
+                message.messageByMe = isMessageByMe(message)
+                message.key = firebaseID
+
+                return message
+            })
+        : messageList
+    }
+
     return (
         <View>
-            { children({ messageList, isMessageByMe, Components: { ChatMessage } }) }
+            { children({ 
+                messageList: mapMessageByMe(messageList), 
+                isMessageByMe, 
+                Components: { ChatMessage } }) }
             <div ref={scrollRef}></div>
-            <IsTypingList list={isTypingList} me={me} />
         </View>
     )
 }
