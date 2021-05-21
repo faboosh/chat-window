@@ -1,70 +1,273 @@
-# Getting Started with Create React App
+# Getting Started with React Firebase Chat
+### Basic setup
+Start by [setting up Firebase in your React project](https://firebase.google.com/docs/web/setup#:~:text=apps%20to%20projects.-,Create%20a%20Firebase%20project,can%20edit%20the%20Project%20ID.)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Once Firebase is set up and initialized, import the following modules
 
-## Available Scripts
+```
+import {
+  ChatProvider,
+  ChatWindow,
+} from "react-firebase-chat"
+```
 
-In the project directory, you can run:
+We then need to provide a theme file, we'll create a file containing the following as a starting point. Feel free to customize this to suit your needs.
 
-### `yarn start`
+```
+//chatTheme.js
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+import { css } from 'styled-components'
+import { keyframes } from 'styled-components'
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+const isTypingAnim = keyframes`
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+`
 
-### `yarn test`
+export const accent = "#18b583"
+// export const accent = "purple"
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+const scrollbar = css`
+    &::-webkit-scrollbar {
+        width: 12px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: #333;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background: #555;
+    }
+`
 
-### `yarn build`
+const dropShadow = css`
+    box-shadow: 0 0 5px 10px rgba(0, 0, 0, 0.1);
+`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+const emojiTheme = {
+    EmojiButton: css`
+        outline: none;
+        border: none;
+        background: ${accent};
+        color: white;
+        padding: 0 1rem;
+        cursor: pointer;
+        position: relative;
+    `,
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    EmojiWrapper: css`
+        height: 500px;
+        width: 300px;
+        background: #333;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(-20px, calc(-100% - 10px));
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        ${dropShadow};
+    `,
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    EmojiTopbar: css`
+        width: 100%;
+        background: ${accent};
+        display: flex;
+        flex-wrap: nowrap;
+        box-sizing: border-box;
+        padding: .5rem;
+    `,
 
-### `yarn eject`
+    EmojiBody: css`
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-grow: 1;
+        padding: .75rem;
+        box-sizing: border-box;
+        overflow-y: auto;
+        ${scrollbar};
+    `,
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    EmojiItem: css`
+        flex-grow: 1;
+        text-align: center;
+        padding: .3rem;
+        cursor: pointer;
+    `,
+}
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+export default {
+    default: {
+        ChatMessage: {
+            style: css`
+                display: flex;
+                flex-direction: column;
+                ${({ messageByMe }) => messageByMe ? "align-self: flex-end;" : ""};     
+            `,
+            Content: css`
+                display: inline-block;
+                background: ${accent};
+                padding: .7em .5em;
+                margin-bottom: .7em;
+                max-width: 70vw;
+                word-break: break-word;
+                border-radius: 5px;    
+                ${({ messageByMe }) => messageByMe ? "align-self: flex-end;" : ""}; 
+                white-space: pre;
+            `,
+            Author: css`
+                opacity: .3;
+                margin: 0;
+                margin-bottom: .2em;
+                font-size: .9rem;
+                ${({ messageByMe }) => messageByMe ? "text-self: right;" : ""};
+            `,
+        },
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+        ChatMessageList: css`
+            padding: .5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            overflow-y: auto;
+            flex-grow: 1;
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+            ${scrollbar};
+        `,
 
-## Learn More
+        ChatWindow: css`
+            display: flex;
+            flex-direction: column;
+            background: hsl(0, 0%, 95%);
+            padding: 0rem;
+            color: white;
+            box-sizing: border-box;
+            font-family: sans-serif;
+            background: #242424;
+            flex-grow: 1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        `,
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+        ChatMessageInput: css`
+            display: flex;
+            justify-self: flex-end;
+            flex-wrap: nowrap;
+            min-height: 50px;
+            background: #333;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            text-align: left;
+            z-index: 50;
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+            ${dropShadow};
+    
+            .ws-chat__input {
+                flex-grow: 1;
+                padding: .5rem 1rem;
+            }
+    
+            .ws-chat__submit-btn {
+                outline: none;
+                border: none;
+                background: ${accent};
+                color: white;
+                padding: 0 1rem;
+                cursor: pointer;
+                font-size: 1.25rem;
+                vertical-align: middle;
+            }
+        `,
 
-### Code Splitting
+        ChatMessageInputButtonGroup: css`
+            display: flex;
+            justify-self: flex-end;
+            flex-wrap: nowrap;
+            height: calc(100% - 1rem);
+            overflow: hidden;
+            border-radius: 15px;
+            margin: .5rem;
+        `,
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+        IsTypingList: css`
+            position: fixed;
+            left: 10px;
+            bottom: 70px;
+            opacity: 0.7;
+            z-index: 1000;
+        `,
 
-### Analyzing the Bundle Size
+        ChatIndicatorList: css`
+            display: flex;
+            flex-direction: column;
+            width: 30vw;
+            max-width: 400px;
+            color: white;
+            box-sizing: border-box;
+            font-family: sans-serif;
+            /* background: ${accent}; */
+        `,
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+        ChatIndicator: css`
+            display: flex;
+            flex-direction: column;
+            width: 30vw;
+            max-width: 400px;
+            cursor: pointer;
+            padding: 1rem;
+            color: ${accent};
+            background: #333;    
+            ${({ active }) => active ? `
+                background: ${accent};
+                color: #333;
+            ` : ""}
+            transition: .25s all;
+        `,
 
-### Making a Progressive Web App
+        IsTypingItem: css`
+            animation-name: ${isTypingAnim};
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+        `,
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+        ...emojiTheme,
 
-### Advanced Configuration
+    }
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+After that, we can import our theme set up our configuration object
 
-### Deployment
+```
+import theme from "path/to/theme/file"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+const config = {
+    theme: theme.default,
+    root: "my-chat", //the base path in which chats will be stored in Firebase
+    me: {
+        displayName: "Faboosh"
+    }
+}
+```
 
-### `yarn build` fails to minify
+...And finally, we can set up a chat window by placing the following in our render method:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+<ChatProvider config={config}>
+    {() => (
+        <ChatWindow />
+    )}
+</ChatProvider>
+```
+
+
+
