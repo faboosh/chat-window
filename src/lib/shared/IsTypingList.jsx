@@ -1,5 +1,5 @@
 import React from 'react'
-import { IsTypingList as List, IsTypingItem as Item } from '@browser/styled'
+import { IsTypingList as List, IsTypingItem as Item } from '../browser/styled'
 
 export default function IsTypingList({
     list,
