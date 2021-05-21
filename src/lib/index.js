@@ -1,6 +1,8 @@
 import ChatWindow from './shared/ChatWindow'
 import ChatMessageList from './shared/ChatMessageList'
-import ChatProvider from './shared/ChatProvider'
+import ChatProvider, {
+    ChatContext
+} from './shared/ChatProvider'
 import EmojiPicker from './shared/EmojiPicker'
 import ChatMessageInput from './shared/ChatMessageInput'
 import ResizeableInput from './shared/ChatMessageInput/ResizeableInput'
@@ -26,6 +28,7 @@ export {
     ChatIndicator,
     ChatIndicatorList,
     ChatMessage,
+    ChatContext,
     useFirebaseState,
     useMessageCollection,
     useFirebaseRef,

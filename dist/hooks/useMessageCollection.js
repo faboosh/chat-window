@@ -7,7 +7,7 @@ exports.default = useMessageCollection;
 
 require("core-js/modules/web.dom-collections.iterator.js");
 
-var _useFirebaseState = _interopRequireDefault(require("@hooks/useFirebaseState"));
+var _useFirebaseState = _interopRequireDefault(require("./useFirebaseState"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

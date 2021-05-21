@@ -9,7 +9,7 @@ require("core-js/modules/web.dom-collections.iterator.js");
 
 var _react = _interopRequireDefault(require("react"));
 
-var _styled = require("@browser/styled");
+var _styled = require("../browser/styled");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

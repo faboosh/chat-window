@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import useFirebaseRef from "@hooks/useFirebaseRef"
+import useFirebaseRef from "./useFirebaseRef"
 
 export default function useFirebaseState(path, options = {
     returnRefOnly: false,

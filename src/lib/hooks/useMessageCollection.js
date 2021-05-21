@@ -1,5 +1,5 @@
 
-import useFirebaseState from "@hooks/useFirebaseState"
+import useFirebaseState from "./useFirebaseState"
 
 
 export default function useMessageCollection(path, options = {

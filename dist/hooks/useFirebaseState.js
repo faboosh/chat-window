@@ -9,7 +9,7 @@ require("core-js/modules/web.dom-collections.iterator.js");
 
 var _react = require("react");
 
-var _useFirebaseRef = _interopRequireDefault(require("@hooks/useFirebaseRef"));
+var _useFirebaseRef = _interopRequireDefault(require("./useFirebaseRef"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
