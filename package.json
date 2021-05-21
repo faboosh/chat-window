@@ -1,6 +1,6 @@
 {
   "name": "react-firebase-chat",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
@@ -13,6 +13,16 @@
     "styled-components": "^5.2.3",
     "unicode-emoji": "^2.1.1",
     "web-vitals": "^1.0.1"
+  },
+  "description": "An extensible chat library for React & Firebase",
+  "author": "Faboosh",
+  "keywords": ["react", "components", "ui", "chat", "firebase"],
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [ "dist", "README.md" ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faboosh/chat-window.git"
   },
   "scripts": {
     "start": "react-scripts start",

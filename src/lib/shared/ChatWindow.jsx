@@ -4,11 +4,11 @@ import { ChatContext } from './ChatProvider'
 
 import { 
     ChatWindowView
-} from './browser/styled'
+} from '../browser/styled'
 
-import ChatMessageList from '@shared/ChatMessageList'
-import IsTypingList from '@shared/IsTypingList'
-import ChatMessageInput from '@shared/ChatMessageInput'
+import ChatMessageList from '../shared/ChatMessageList'
+import IsTypingList from '../shared/IsTypingList'
+import ChatMessageInput from '../shared/ChatMessageInput'
 import styled, { ThemeProvider } from 'styled-components'
 
 export default function ChatWindow({

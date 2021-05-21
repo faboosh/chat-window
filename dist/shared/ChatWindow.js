@@ -13,7 +13,7 @@ var _hooks = require("@hooks");
 
 var _ChatProvider = require("./ChatProvider");
 
-var _styled = require("@browser/styled");
+var _styled = require("./browser/styled");
 
 var _ChatMessageList = _interopRequireDefault(require("@shared/ChatMessageList"));
 
