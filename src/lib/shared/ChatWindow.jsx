@@ -1,76 +1,59 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useMessageCollection, useFirebaseState } from '@hooks'
+import { ChatContext } from './ChatProvider'
 
 import { 
-    ChatWindowView as Wrapper
-} from '@browser/styled'
+    ChatWindowView
+} from './browser/styled'
 
 import ChatMessageList from '@shared/ChatMessageList'
+import IsTypingList from '@shared/IsTypingList'
 import ChatMessageInput from '@shared/ChatMessageInput'
 import styled, { ThemeProvider } from 'styled-components'
 
 export default function ChatWindow({
-    root = "chat-new/messages",
-    theme = {},
-    me = {
-        displayName: ""
-    },
+    wrapper: Wrapper = ChatWindowView, 
     messageByMe = ({
         me,
         author
     }) => {
-        return me.displayName == author.displayName
+        return me.displayName === author.displayName
     },
-    children = ({ 
-        messageByMe, 
-        me, 
-        messageList, 
-        onSend,
-        isTypingList,
-        setIsTyping,
-        Components: {
-            ChatMessageInput, 
-            ChatMessageList
-        }
-    }) => {
+    children = (props) => {
         return <>
-            <ChatMessageList 
-                messageByMe={messageByMe}
-                me={me}
-                messageList={messageList}
-                isTypingList={isTypingList}
-                autoScroll
-            />
-            <ChatMessageInput send={onSend} setIsTyping={setIsTyping} />
-
+            <ChatMessageList {...props}/>
+            <IsTypingList {...props} />
+            <ChatMessageInput {...props} />
         </>
     },
 }) {
-    const MESSAGES_PATH = root + "/messages"
-    const SETTINGS_PATH = root + "/settings"
+
+    const { config } = useContext(ChatContext)
+
+    const MESSAGES_PATH = config.root + "/messages"
+    const SETTINGS_PATH = config.root + "/settings"
     const { messageList, send } = useMessageCollection(MESSAGES_PATH)
 
     const [ isTypingList, isTypingRef ] = useFirebaseState(SETTINGS_PATH + "/isTyping")
 
     function setIsTyping(isTyping) {
-        isTypingRef.child(me.displayName).set(isTyping)
+        isTypingRef.child(config.me.displayName).set(isTyping)
     }
 
     function onSend(message) {
-
         send({
-            author: me,
+            author: config.me,
             message,
-            epoch: Date.now(),
+            epoch: Date.now()
         })
     }
 
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={config.theme}>
             <Wrapper>
                 { children({ 
                     messageByMe, 
-                    me, 
+                    me: config.me, 
                     messageList, 
                     onSend,
                     isTypingList,
