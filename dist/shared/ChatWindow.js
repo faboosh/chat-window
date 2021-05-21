@@ -9,17 +9,17 @@ require("core-js/modules/web.dom-collections.iterator.js");
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _hooks = require("@hooks");
+var _hooks = require("../hooks");
 
 var _ChatProvider = require("./ChatProvider");
 
-var _styled = require("./browser/styled");
+var _styled = require("../browser/styled");
 
-var _ChatMessageList = _interopRequireDefault(require("@shared/ChatMessageList"));
+var _ChatMessageList = _interopRequireDefault(require("../shared/ChatMessageList"));
 
-var _IsTypingList = _interopRequireDefault(require("@shared/IsTypingList"));
+var _IsTypingList = _interopRequireDefault(require("../shared/IsTypingList"));
 
-var _ChatMessageInput = _interopRequireDefault(require("@shared/ChatMessageInput"));
+var _ChatMessageInput = _interopRequireDefault(require("../shared/ChatMessageInput"));
 
 var _styledComponents = _interopRequireWildcard(require("styled-components"));
 
